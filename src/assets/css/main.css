@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+body {
+    background-image: url('../images/background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.bg-overlay {
+   /* background: rgba(243, 2, 2, 0.685); */
+    backdrop-filter: blur(0.2px);
+}

@@ -1,0 +1,65 @@
+<template>
+  <AppLayout>
+    <Card class="max-w-md w-full">
+      <p class="text-2xl font-bold text-blue-900 mb-3 text-center">
+        {{ contactStore.contact?.first_name }}, o seu cadastro foi realizado com sucesso!
+      </p>
+
+      <div class="w-full bg-gray-50 rounded-xl p-4 mb-4 shadow">
+        <p class="text-gray-700 mb-2"><strong>Cursos:</strong> </p>
+
+        <div class="flex flex-col pl-5 mb-2 gap-1">
+          <p class="text-gray-400">{{ contactStore.contact.course_1 }}</p>
+          <p class="text-gray-400">{{ contactStore.contact.course_2 }}</p>
+          <p class="text-gray-400">{{ contactStore.contact.course_3 }}</p>  
+        </div>
+
+        <p class="text-gray-700 mb-2"><strong>Cidade:</strong></p> 
+        <p class="text-gray-400 pl-5">{{ contactStore.contact.city }}</p>
+
+      </div>
+
+      <p class="text-gray-700 text-center mb-4">
+        Caso tenha dúvidas ou precise de mais informações, entre em contato pelo WhatsApp.
+      </p>
+
+      <a href="https://wa.me/5511937576212?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20processo%20de%20bolsas%20gratuito%20da%20Fisk"
+        target="_blank"
+        class="w-full text-center text-white font-bold py-3 rounded-lg transition mt-2 text-lg shadow disabled:opacity-50 bg-green-600 hover:bg-green-700">
+        Falar no WhatsApp
+      </a>
+
+      <div class="w-full flex flex-col items-center mt-4">
+        <Badge bgClass="bg-blue-100" textClass="text-[#000f8e]" class="text-xs font-semibold px-4 py-1 rounded-lg mb-2 text-center">
+          Em breve você receberá mais informações.
+        </Badge>
+        <span class="text-gray-500 text-xs text-center">
+          Seus dados estão protegidos. <br /> Em caso de dúvida, nossa equipe está pronta para ajudar.
+        </span>
+      </div>
+    </Card>
+  </AppLayout>
+</template>
+
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useContactStore } from '@/stores/contactStore';
+import AppLayout from "@/layout/AppLayout.vue";
+import Badge from "@/components/ui/Badge.vue";
+import Card from "@/components/ui/Card.vue";
+
+const router = useRouter();
+const route = useRoute();
+
+const contactStore = useContactStore(route.params.id);
+
+console.log(contactStore.contact)
+
+onMounted(() => {
+  if (!contactStore.contact) {
+    console.warn("Nenhum contato encontrado no store, redirecionando para /404...");
+    router.push("/404");
+  }
+});
+</script>
