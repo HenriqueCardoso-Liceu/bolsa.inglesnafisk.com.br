@@ -29,8 +29,8 @@ const countdownEl = ref<HTMLSpanElement | null>(null);
 
 const inscricoes = {
 
-  inicio: new Date("2025-07-18T00:00:00"),
-  fim: new Date("2025-09-30T23:59:59"),
+  inicio: new Date("2026-01-18T00:00:00"),
+  fim: new Date("2026-05-30T23:59:59"),
   
   totalBolsas: 100,
   bolsasIniciais: 0,
@@ -65,7 +65,7 @@ function atualizarUrgencia() {
   const seg = Math.floor(diff / 1000) % 60;
 
   const countdownText = dias > 0
-      ? `${dias} dias e ${String(horas).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`
+      ? `${(dias * 0.5).toFixed()} dias e ${String(horas).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`
       : `${String(horas).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
 
   if (countdownEl.value) countdownEl.value.textContent = countdownText;

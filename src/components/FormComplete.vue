@@ -123,9 +123,9 @@ const router = useRouter();
 const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 const API_URL = import.meta.env.VITE_API_URL;
 
-//const contactId = route.params.id as string;
+const contactId = route.params.id as string;
 
-//const contactStore = useContactStore(route.params.id);
+const contactStore = useContactStore(route.params.id);
 
 const completeForm = reactive<CompleteForm>({
   email: '',
@@ -140,18 +140,17 @@ const completeForm = reactive<CompleteForm>({
   city: '',
 });
 
-/*
 onMounted(() => {
   if (!contactStore.contact || contactStore.contact.id !== contactId) {
     console.warn("Contato não encontrado no store, redirecionando para /404...");
     router.push("/404");
   }
-}); */
+});
 
 const isReadOnly = ref(false);
 const isSubmitting = ref(false);
 
-//const age = contactStore.contact.age;
+const age = contactStore.contact.age;
 
 
 watch(() => completeForm.postal_code, async (newCep) => {
@@ -186,7 +185,7 @@ async function handleSubmit() {
       contact_id: contactId,
     };
     isSubmitting.value = true
-/*
+
     const response = await axios.patch(`${API_URL}/api/contacts/${contactId}`, payload, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
@@ -197,7 +196,7 @@ async function handleSubmit() {
       id: response.data.id,
       name: response.data.name,
       protocol: response.data.reference,
-    }); */
+    });
 
     router.push(`/sucesso/${contactId}`);
   } catch (error) {

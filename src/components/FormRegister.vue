@@ -1,36 +1,67 @@
 <template>
   <form class="flex flex-col gap-3 w-full" @submit.prevent="handleSubmit">
-    <Input v-model="registerForm.name" placeholder="Nome completo" required aria-label="Nome completo"
-      :error="errors.name" />
+    <Input 
+      v-model="registerForm.name" 
+      placeholder="Nome completo" 
+      required aria-label="Nome completo"
+      :error="errors.name" 
+    />
 
-    <Input v-model="registerForm.mobile_phone" type="tel" placeholder="WhatsApp / Celular" required
-      v-mask="'(##) #####-####'" aria-label="WhatsApp" :error="errors.mobile_phone" />
+    <Input 
+      v-model="registerForm.mobile_phone" 
+      type="tel" 
+      placeholder="WhatsApp / Celular" 
+      required
+      v-mask="'(##) #####-####'" 
+      aria-label="WhatsApp" 
+      :error="errors.mobile_phone" 
+    />
 
-    <Input v-model="registerForm.email" type="email" placeholder="E-mail" required aria-label="E-mail"
-      :error="errors.email" />
+    <Input 
+      v-model="registerForm.email" 
+      type="email" 
+      placeholder="E-mail" 
+      required 
+      aria-label="E-mail"
+      :error="errors.email" 
+    />
 
-    <Input v-model="registerForm.date_of_birth" type="tel" placeholder="Data de nascimento" required
-      v-mask="'##/##/####'" aria-label="Data de nascimento" :error="errors.date_of_birth" />
+    <Input 
+      v-model="registerForm.date_of_birth" 
+      type="tel" 
+      placeholder="Data de nascimento" 
+      required
+      v-mask="'##/##/####'" 
+      aria-label="Data de nascimento" 
+      :error="errors.date_of_birth" 
+    />
 
-    <Select v-model="registerForm.course_1" placeholder="Curso - Opção 1" required :options="filteredCourseOptions1"
-      :error="errors.course_1 || ''" />
+    <Select 
+      v-for="(curso, index) in registerForm.courses"
+      :key="curso.order"
+      v-model="curso.course" 
+      :placeholder="`Curso - Opção ${curso.order}`"
+      required 
+      :options="courseOptions"
+      :error="errors[`courses.${index}.course`] || ''"
+    />
 
-    <Select v-model="registerForm.course_2" placeholder="Curso - Opção 2" required :options="filteredCourseOptions2"
-      :error="errors.course_2 || ''" />
-
-    <Select v-model="registerForm.course_3" placeholder="Curso - Opção 3" required :options="filteredCourseOptions3"
-      :error="errors.course_3 || ''" />
-
-    <Select v-model="registerForm.city" placeholder="Selecione uma Cidade *" required aria-label="Cidade"
-      :options="citiesOptions" :error="errors.city">
+    <Select 
+      v-model="registerForm.city" 
+      placeholder="Selecione uma Cidade *" 
+      required 
+      aria-label="Cidade"
+      :options="citiesOptions" 
+      :error="errors.city"
+    >
     </Select>
 
-    <div class="flex items-start gap-2 text-sm">
+    <!-- <div class="flex items-start gap-2 text-sm">
       <input id="aceito-termos" type="checkbox" required class="mt-1 accent-blue-800" />
       <label for="aceito-termos" class="select-none">
         Li e aceito os Termos de Uso e os Termos do Desconto.
       </label>
-    </div>
+    </div> -->
 
     <Button type="submit" :disabled="isSubmitting">
       {{ isSubmitting ? 'Salvando...' : 'Confirmar Inscrição' }}
@@ -58,22 +89,7 @@ const errors = ref({})
 const courseOptions = import.meta.env.VITE_COURSES.split(',').map(c => c.trim());
 const citiesOptions = import.meta.env.VITE_ESCOLAS.split(',').map(c => c.trim());
 
-/*
-function availableGroupedOptions() {
-  return [
-    {
-      label: "Cursos Disponíveis",
-      options: courseOptions.map(course => ({
-        label: course,
-        value: course,
-      }))
-    }
-  ];
-}*/
-
-
-/*
-const availableGroupedOptions = (index: number) => {
+/* const availableGroupedOptions = (index: number) => {
   const selected = registerForm.courses.map(c => c.course);
 
   return Object.entries(courseOptions).map(([category, items]) => ({
@@ -87,53 +103,10 @@ const availableGroupedOptions = (index: number) => {
   }));
 }; */
 
-const filteredCourseOptions1 = computed(() => {
-  return courseOptions.filter(
-    (course: string) =>
-      course !== registerForm.course_2 &&
-      course !== registerForm.course_3
-  );
-});
-
-const filteredCourseOptions2 = computed(() => {
-  return courseOptions.filter(
-    (course: string) =>
-      course !== registerForm.course_1 &&
-      course !== registerForm.course_3
-  );
-});
-
-const filteredCourseOptions3 = computed(() => {
-  return courseOptions.filter(
-    (course: string) =>
-      course !== registerForm.course_1 &&
-      course !== registerForm.course_2
-  );
-});
 
 
 
-const registerForm = reactive<RegisterForm>({
-  name: '',
-  mobile_phone: '',
-  email: '',
-  date_of_birth: '',
-  course_1: '',
-  course_2: '',
-  course_3: '',
-  city: '',
-  utm_source: '',
-  utm_medium: '',
-  utm_campaign: '',
-  utm_term: '',
-  utm_content: '',
-  gclid: '',
-  fbclid: '',
-  msclkid: '',
-  referrer: '',
-  landing_page: '',
-});
-
+/* 
 onMounted(() => {
   const params = new URLSearchParams(window.location.search);
 
@@ -169,7 +142,33 @@ onMounted(() => {
   // 3️⃣ Captura informações complementares
   registerForm.referrer = document.referrer || '';
   registerForm.landing_page = window.location.href;
+}); */
+
+const registerForm = reactive<RegisterForm>({
+  name: '',
+  mobile_phone: '',
+  date_of_birth: '',
+  courses: [
+    { order: 1, course: '' },
+    { order: 2, course: '' },
+    { order: 3, course: '' }
+  ],
+  city: '',
+
 });
+/* old fields
+
+email: '',
+utm_source: '',
+utm_medium: '',
+utm_campaign: '',
+utm_term: '',
+utm_content: '',
+gclid: '',
+fbclid: '',
+msclkid: '',
+referrer: '',
+landing_page: '', */
 
 
 const isSubmitting = ref(false);
@@ -183,17 +182,17 @@ async function handleSubmit() {
 
     isSubmitting.value = true;
 
-    const response = await axios.post(`${API_URL}/registrations`, registerForm);
+    const response = await axios.post(`${API_URL}/api/contacts/`, registerForm,{
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+    });
 
-    console.log('Response:', response);
+    const contactStore = useContactStore(response.data.id);
 
-    const contact = response.data.data;
+    contactStore.setContact(response.data);
 
-    const contactStore = useContactStore(contact.id);
-
-    contactStore.setContact(contact);
-
-    router.push(`/sucesso/${contact.id}`);
+    router.push(`/completar/${response.data.id}`);     
   } catch (error: any) {
     isSubmitting.value = false;
 

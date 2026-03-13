@@ -2,36 +2,28 @@
   <AppLayout>
     <Card class="max-w-md w-full">
       <p class="text-2xl font-bold text-blue-900 mb-3 text-center">
-        {{ contactStore.contact?.first_name }}, o seu cadastro foi realizado com sucesso!
+        {{ contactStore.contact?.name }}, o seu cadastro foi realizado com sucesso!
       </p>
 
-      <div class="w-full bg-gray-50 rounded-xl p-4 mb-4 shadow">
-        <p class="text-gray-700 mb-2"><strong>Cursos:</strong> </p>
-
-        <div class="flex flex-col pl-5 mb-2 gap-1">
-          <p class="text-gray-400">{{ contactStore.contact.course_1 }}</p>
-          <p class="text-gray-400">{{ contactStore.contact.course_2 }}</p>
-          <p class="text-gray-400">{{ contactStore.contact.course_3 }}</p>  
-        </div>
-
-        <p class="text-gray-700 mb-2"><strong>Cidade:</strong></p> 
-        <p class="text-gray-400 pl-5">{{ contactStore.contact.city }}</p>
-
+      <div class="my-3 w-full flex flex-col items-center">
+        <span class="text-gray-700 text-sm">Protocolo:</span>
+        <span class="text-2xl font-bold text-blue-900 tracking-widest">{{ contactStore.contact?.protocol }}</span>
       </div>
 
+      <hr class="my-4 border-blue-200 w-full" />
+
       <p class="text-gray-700 text-center mb-4">
-        Caso tenha dúvidas ou precise de mais informações, entre em contato pelo WhatsApp.
+        Entre no grupo exclusivo agora para garantir sua inscrição e receber todas as informações dos
+        próximos passos!
       </p>
 
-      <a href="https://wa.me/5511937576212?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20processo%20de%20bolsas%20gratuito%20da%20Fisk"
-        target="_blank"
-        class="w-full text-center text-white font-bold py-3 rounded-lg transition mt-2 text-lg shadow disabled:opacity-50 bg-green-600 hover:bg-green-700">
-        Falar no WhatsApp
+      <a href="https://wa.me/5511937576212?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20processo%20de%20bolsas%20gratuito%20da%20Fisk" target="_blank" class="w-full text-center text-white font-bold py-3 rounded-lg transition mt-2 text-lg shadow disabled:opacity-50 bg-green-600 hover:bg-green-700">
+        Entrar no Grupo do WhatsApp
       </a>
 
       <div class="w-full flex flex-col items-center mt-4">
-        <Badge bgClass="bg-blue-100" textClass="text-[#000f8e]" class="text-xs font-semibold px-4 py-1 rounded-lg mb-2 text-center">
-          Em breve você receberá mais informações.
+        <Badge class="bg-red-100 text-red-800 text-xs font-semibold px-4 py-1 rounded-lg mb-2 text-center">
+          Entre nos grupos para receber os próximos passos e concluir sua inscrição!
         </Badge>
         <span class="text-gray-500 text-xs text-center">
           Seus dados estão protegidos. <br /> Em caso de dúvida, nossa equipe está pronta para ajudar.
