@@ -42,7 +42,8 @@
       v-model="curso.course" 
       :placeholder="`Curso - Opção ${curso.order}`"
       required 
-      :options="courseOptions"
+      :options="availableOptions(index)"
+      :disabled="index > 0 && !registerForm.courses[index - 1].course"
       :error="errors[`courses.${index}.course`] || ''"
     />
 
@@ -55,13 +56,6 @@
       :error="errors.city"
     >
     </Select>
-
-    <!-- <div class="flex items-start gap-2 text-sm">
-      <input id="aceito-termos" type="checkbox" required class="mt-1 accent-blue-800" />
-      <label for="aceito-termos" class="select-none">
-        Li e aceito os Termos de Uso e os Termos do Desconto.
-      </label>
-    </div> -->
 
     <Button type="submit" :disabled="isSubmitting">
       {{ isSubmitting ? 'Salvando...' : 'Confirmar Inscrição' }}
@@ -89,20 +83,10 @@ const errors = ref({})
 const courseOptions = import.meta.env.VITE_COURSES.split(',').map(c => c.trim());
 const citiesOptions = import.meta.env.VITE_ESCOLAS.split(',').map(c => c.trim());
 
-/* const availableGroupedOptions = (index: number) => {
-  const selected = registerForm.courses.map(c => c.course);
-
-  return Object.entries(courseOptions).map(([category, items]) => ({
-    label: category,
-    options: items
-        .filter(course => !selected.includes(course) || registerForm.courses[index].course === course)
-        .map(course => ({
-          label: course.trim(),
-          value: course.trim()
-        }))
-  }));
-}; */
-
+const availableOptions = (index: number) => {
+  const selectedCourses = registerForm.courses.map(c => c.course).filter((course, i) => i !== index && course);
+  return courseOptions.filter(course => !selectedCourses.includes(course));
+};
 
 
 
