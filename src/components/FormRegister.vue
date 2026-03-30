@@ -192,6 +192,8 @@ async function handleSubmit() {
 
     contactStore.setContact(response.data);
 
+    clarity("event", "lead");
+
     router.push(`/completar/${response.data.id}`);     
   } catch (error: any) {
     isSubmitting.value = false;

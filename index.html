@@ -1,35 +1,75 @@
 <!doctype html>
 <html lang="en">
-<head>
-
+  <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/src/assets/images/favicon.png" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/src/assets/images/favicon.png"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fisk - Bolsa de Estudo 100% Grátis</title>
-    <meta name="description" content="Garanta um desconto de 50% na Fisk!. Inscreva-se agora.">
+    <meta
+      name="description"
+      content="Garanta um desconto de 50% na Fisk!. Inscreva-se agora."
+    />
 
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '993585332338489');
-    fbq('track', 'PageView');
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "993585332338489");
+      fbq("track", "PageView");
     </script>
     <!-- End Meta Pixel Code -->
 
-</head>
-<body>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=993585332338489&ev=PageView&noscript=1"
+    <!-- Clarity Script -->
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "w1ylx45qwd");
+    </script>
+  </head>
+  <body>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=993585332338489&ev=PageView&noscript=1"
     /></noscript>
 
-<div id="app"></div>
-<script type="module" src="/src/main.js"></script>
-</body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
