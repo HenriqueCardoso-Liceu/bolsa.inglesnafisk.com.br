@@ -1,26 +1,51 @@
 <template>
   <AppLayout>
     <Card class="max-w-md w-full">
-      <p class="text-2xl font-bold text-blue-900 mb-4 text-center">
-        Parabéns, {{ contact.name }}! Chegou a hora de agendar seu atendimento e garantir sua vaga.
-      </p>
+      <div class="spinner" v-if="isLoading"></div>
 
-      <h2 class="text-md md:text-md font-semibold text-blue-900 mb-6 text-center">
-        Escolha o melhor dia e horário para você
-      </h2>
+      <div v-if="!isLoading">
 
-      <FormSchedule :groupedSlots="groupedSlots"/>
-      <div class="w-full flex flex-col items-center mt-6">
-        <Badge class="bg-yellow-100 text-yellow-800 text-sm font-semibold px-4 py-1 rounded-full mb-2 text-center">
-          Garanta seu horário! As vagas são limitadas por dia.
-        </Badge>
-        <span class="text-gray-500 text-xs text-center">
-          Seus dados estão protegidos. Nossa equipe está à disposição para ajudar.
-        </span>
+        <p class="text-2xl font-bold text-blue-900 mb-4 text-center">
+          Parabéns, {{ contact.name }}! Chegou a hora de agendar seu atendimento e garantir sua vaga.
+        </p>
+  
+        <h2 class="text-md md:text-md font-semibold text-blue-900 mb-6 text-center">
+          Escolha o melhor dia e horário para você
+        </h2>
+  
+        <FormSchedule :groupedSlots="groupedSlots"/>
+        <div class="w-full flex flex-col items-center mt-6">
+          <Badge class="bg-yellow-100 text-yellow-800 text-sm font-semibold px-4 py-1 rounded-full mb-2 text-center">
+            Garanta seu horário! As vagas são limitadas por dia.
+          </Badge>
+          <span class="text-gray-500 text-xs text-center">
+            Seus dados estão protegidos. Nossa equipe está à disposição para ajudar.
+          </span>
+        </div>
       </div>
-    </card>
+
+    </Card>
   </AppLayout>
 </template>
+
+<style scoped>
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  /* light gray */
+  border-top: 4px solid #3b82f6;
+  /* blue */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
 
 <script setup lang="ts">
 import AppLayout from "@/layout/AppLayout.vue";
@@ -34,6 +59,8 @@ import {onMounted, ref} from "vue";
 
 import axios from "axios";
 import {useRoute, useRouter}  from "vue-router";
+
+const isLoading = ref(true);
 
 const route = useRoute();
 const router = useRouter();
@@ -52,6 +79,11 @@ async function fetchSchedule() {
       headers: {Authorization: `Bearer ${API_TOKEN}`},
     });
 
+    if (response.data.contact.status.value === 'attended' || response.data.contact.status_two.value === 'attended') {
+      window.location.href = `/agendado/${route.params.id}`;
+      return;
+    }
+
     const contactStore = useContactStore(response.data.contact.id);
     contactStore.setContact(response.data.contact);
 
@@ -62,8 +94,6 @@ async function fetchSchedule() {
     const code = Number(error?.response?.data?.code);
     const message = error?.response?.data?.error;
 
-    console.log(code)
-
     if ([22, 20, 21].includes(code)) {
       router.push({ name: 'ScheduleUnavailable', query: { message } });
     } else if (24 == code) {
@@ -72,6 +102,8 @@ async function fetchSchedule() {
       router.push({ name: '404' });
     }
 
+  } finally {
+    isLoading.value = false;
   }
 }
 
